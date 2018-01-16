@@ -3,13 +3,27 @@ import PropTypes from 'prop-types'
 import * as Helpers from '../utils/Helpers'
 
 class BookShelfChanger extends Component {
+
+    state = {
+        book: {}
+    }
+
+    componentDidMount() {
+        this.setState({book: this.props.book});
+    }
+
+    handleShelfChange = (e) => {
+        this.props.onUpdateBook(this.state.book, e.target.value)
+    }
+
     render() {
+        const {book, onUpdateBook} = this.props
         return (
             <div className="book-shelf-changer">
-                <select>
+                <select onChange={this.handleShelfChange}>
                     <option value="none" disabled>Move to...</option>
                     {this.props.shelves.map(shelf => (
-                        <option key={shelf}>{Helpers.camelCaseToReadable(shelf)}</option>
+                        <option key={shelf} value={shelf}>{Helpers.camelCaseToReadable(shelf)}</option>
                     ))}
                 </select>
             </div>

@@ -4,7 +4,7 @@ import PropTypes from 'prop-types'
 
 class Book extends Component {
     render() {
-        const {book, shelves} = this.props;
+        const {book, shelves, onUpdateBook} = this.props;
 
         return (
             <div className="book">
@@ -14,7 +14,7 @@ class Book extends Component {
                         height: 193,
                         backgroundImage: `url("${book.imageLinks.thumbnail}")`
                     }}></div>
-                    <BookShelfChanger shelves={shelves} />
+                    <BookShelfChanger book={book} shelves={shelves} onUpdateBook={onUpdateBook}/>
                 </div>
                 <div className="book-title">{book.title}</div>
                 <div className="book-authors">{book.authors}</div>
