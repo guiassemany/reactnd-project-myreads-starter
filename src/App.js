@@ -4,21 +4,24 @@ import {Route, Link} from 'react-router-dom'
 import './App.css'
 import BookShelf from './Components/BookShelf'
 import BookGrid from './Components/BookGrid'
+import BookShelfLoader from './Components/BookShelfLoader'
 
 class BooksApp extends React.Component {
     state = {
-        books: []
+        books: [],
+        loading: true
     }
 
     componentDidMount() {
         BooksAPI.getAll().then(response => {
             this.setState({
-                books: response
+                books: response,
+                loading: false
             })
         });
     }
 
-    getAvailableShelfs() {
+    getAvailableShelves() {
         return [...new Set(this.state.books.map(book=> book.shelf))];
     }
 
@@ -41,7 +44,12 @@ class BooksApp extends React.Component {
                             <h1>MyReads</h1>
                         </div>
                         <div className="list-books-content">
-                            {this.getAvailableShelfs().map((shelf) => <BookShelf key={shelf} shelves={this.getAvailableShelfs()} shelf={shelf} books={this.getAllFromShelf(shelf)}/>)}
+                            {!this.state.loading && (
+                                this.getAvailableShelves().map((shelf) => <BookShelf key={shelf} shelves={this.getAvailableShelves()} shelf={shelf} books={this.getAllFromShelf(shelf)}/>)
+                            )}
+                            {this.state.loading && (
+                                <BookShelfLoader />
+                            )}
                         </div>
                         <div className="open-search">
                             <Link to='/search'>Add a book</Link>
