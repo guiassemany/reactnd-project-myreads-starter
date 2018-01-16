@@ -1,25 +1,17 @@
 import React, {Component} from 'react'
-import Book from './Book'
+import BookGrid from './BookGrid'
+import * as Helpers from '../utils/Helpers'
 
 class BookShelf extends Component {
-    formatShelfTitle(title) {
-        let titleResult = title.replace( /([A-Z])/g, " $1" );
-        return titleResult.charAt(0).toUpperCase() + titleResult.slice(1);
-    }
-
     render() {
+        const {books, shelves, shelf} = this.props
+
         return (
             <div>
                 <div className="bookshelf">
-                    <h2 className="bookshelf-title">{this.formatShelfTitle(this.props.shelf)}</h2>
+                    <h2 className="bookshelf-title">{Helpers.camelCaseToReadable(shelf)}</h2>
                     <div className="bookshelf-books">
-                        <ol className="books-grid">
-                            {this.props.books.map(book => (
-                                <li key={book.id}>
-                                    <Book book={book}/>
-                                </li>
-                            ))}
-                        </ol>
+                        <BookGrid shelves={shelves} books={books}/>
                     </div>
                 </div>
             </div>

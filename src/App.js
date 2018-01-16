@@ -3,6 +3,7 @@ import * as BooksAPI from './BooksAPI'
 import {Route, Link} from 'react-router-dom'
 import './App.css'
 import BookShelf from './Components/BookShelf'
+import BookGrid from './Components/BookGrid'
 
 class BooksApp extends React.Component {
     state = {
@@ -11,7 +12,6 @@ class BooksApp extends React.Component {
 
     componentDidMount() {
         BooksAPI.getAll().then(response => {
-            console.log(response);
             this.setState({
                 books: response
             })
@@ -26,6 +26,12 @@ class BooksApp extends React.Component {
         return this.state.books.filter(book => book.shelf === shelf)
     }
 
+    updateBook = (book, shelf) => {
+        BooksAPI.update(book, shelf).then(response => {
+            console.log(response);
+        });
+    }
+
     render() {
         return (
             <div className="app">
@@ -35,7 +41,7 @@ class BooksApp extends React.Component {
                             <h1>MyReads</h1>
                         </div>
                         <div className="list-books-content">
-                            {this.getAvailableShelfs().map((shelf) => <BookShelf key={shelf} shelf={shelf} books={this.getAllFromShelf(shelf)}/>)}
+                            {this.getAvailableShelfs().map((shelf) => <BookShelf key={shelf} shelves={this.getAvailableShelfs()} shelf={shelf} books={this.getAllFromShelf(shelf)}/>)}
                         </div>
                         <div className="open-search">
                             <Link to='/search'>Add a book</Link>
@@ -51,7 +57,7 @@ class BooksApp extends React.Component {
                         </div>
                     </div>
                         <div className="search-books-results">
-                            <ol className="books-grid"></ol>
+                            <BookGrid books={[]} />
                         </div>
                     </div>
                 )}/>
