@@ -1,8 +1,8 @@
 import React from 'react'
 import * as BooksAPI from './BooksAPI'
-import {Route, Link} from 'react-router-dom'
+import {Route} from 'react-router-dom'
 import './App.css'
-import BookShelf from './Components/BookShelf'
+import BookList from './Components/BookList'
 import BookSearch from './Components/BookSearch'
 import sortBy from 'sort-by'
 
@@ -34,8 +34,10 @@ class BooksApp extends React.Component {
         })
     }
 
-    getAllFromShelf(shelf) {
-        return this.state.books.filter(book => book.shelf === shelf).sort(sortBy('shelf', 'title'))
+    getAllFromShelf = (shelf) => {
+        if(shelf) {
+            return this.state.books.filter(book => book.shelf === shelf).sort(sortBy('shelf', 'title'))
+        }
     }
 
     updateBook = (book, shelf) => {
@@ -53,7 +55,6 @@ class BooksApp extends React.Component {
                     book.shelf = shelf
                     newState.push(book)
                 }
-                console.log(newState)
                 return {books: newState.sort(sortBy('shelf', 'title'))}
             }))
             .catch(err => console.error('Error occurred moving book: ', err))
@@ -87,29 +88,9 @@ class BooksApp extends React.Component {
         return (
             <div className="app">
                 <Route exact path='/' render={() => (
-                    <div className="list-books">
-                        <div className="list-books-title">
-                            <h1>MyReads</h1>
-                        </div>
-                        <div className="list-books-content">
-                            {!this.state.loading && (
-                                this.getAvailableShelves().map((shelf) => <BookShelf key={shelf}
-                                                                                     shelves={this.getAvailableShelves()}
-                                                                                     shelf={shelf}
-                                                                                     books={this.getAllFromShelf(shelf)}
-                                                                                     onUpdateBook={this.updateBook}
-                                />)
-                            )}
-                            {this.state.loading && (
-                                <div>
-                                    {/* Loading indicator */}
-                                </div>
-                            )}
-                        </div>
-                        <div className="open-search">
-                            <Link to='/search'>Add a book</Link>
-                        </div>
-                    </div>
+                    <BookList shelves={this.getAvailableShelves()}
+                              onUpdateBook={this.updateBook}
+                              getAllFromShelf={this.getAllFromShelf}/>
                 )}/>
                 <Route exact path='/search' render={() => (
                     <BookSearch onSearch={this.searchBooks} books={this.state.searchResults}
