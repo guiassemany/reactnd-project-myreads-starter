@@ -5,12 +5,14 @@ import './App.css'
 import BookShelf from './Components/BookShelf'
 import BookShelfLoader from './Components/BookShelfLoader'
 import BookSearch from './Components/BookSearch'
+import sortBy from 'sort-by'
 
 class BooksApp extends React.Component {
     state = {
         books: [],
         loading: true,
-        searchResults: []
+        searchResults: [],
+        availableShelves: []
     }
 
     componentDidMount() {
@@ -19,15 +21,22 @@ class BooksApp extends React.Component {
                 books: response,
                 loading: false
             })
+            this.setState({
+                availableShelves: this.getAvailableShelves()
+            })
         })
     }
 
     getAvailableShelves() {
-        return [...new Set(this.state.books.map(book => book.shelf))]
+        return [...new Set(this.state.books.map(book => book.shelf))].sort((a,b) => {
+            if(a < b) return -1;
+            if(a > b) return 1;
+            return 0;
+        })
     }
 
     getAllFromShelf(shelf) {
-        return this.state.books.filter(book => book.shelf === shelf)
+        return this.state.books.filter(book => book.shelf === shelf).sort(sortBy('shelf', 'title'))
     }
 
     updateBook = (book, shelf) => {
@@ -45,7 +54,8 @@ class BooksApp extends React.Component {
                     book.shelf = shelf
                     newState.push(book)
                 }
-                return {books: newState}
+                console.log(newState)
+                return {books: newState.sort(sortBy('shelf', 'title'))}
             }))
             .catch(err => console.error('Error occurred moving book: ', err))
     }
