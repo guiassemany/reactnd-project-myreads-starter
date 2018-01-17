@@ -63,12 +63,24 @@ class BooksApp extends React.Component {
         if (query.length > 0) {
             BooksAPI.search(query).then(response => {
                 if (!response.error) {
-                    this.setState({
-                        searchResults: response
+                    this.setState((prevState) => {
+                        return {searchResults: this.mergeBooks(response, prevState.books)}
                     })
                 }
             })
         }
+    }
+
+    mergeBooks = (arr,Arr) => {
+        return arr.map((item)=>{
+            Arr.forEach((Item)=>{
+                if(Item.id === item.id){
+                    item.shelf = Item.shelf
+                    return
+                }
+            })
+            return item
+        })
     }
 
     render() {
