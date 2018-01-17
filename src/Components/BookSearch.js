@@ -2,7 +2,7 @@ import React, {Component} from 'react'
 import {Link} from 'react-router-dom'
 import BookGrid from './BookGrid'
 import PropTypes from 'prop-types'
-import {DebounceInput} from 'react-debounce-input';
+import {DebounceInput} from 'react-debounce-input'
 
 class BookSearch extends Component {
 
@@ -19,7 +19,7 @@ class BookSearch extends Component {
                                 minLength={3}
                                 debounceTimeout={500}
                                 onChange={event => onSearch(event.target.value)}
-                                placeholder="Search by title or author" />
+                                placeholder="Search by title or author"/>
                         </div>
                     </div>
                     <div className="search-books-results">

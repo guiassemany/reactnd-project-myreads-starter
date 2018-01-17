@@ -27,15 +27,15 @@ class BooksApp extends React.Component {
     }
 
     getAvailableShelves() {
-        return [...new Set(this.state.books.map(book => book.shelf))].sort((a,b) => {
-            if(a < b) return -1;
-            if(a > b) return 1;
-            return 0;
+        return [...new Set(this.state.books.map(book => book.shelf))].sort((a, b) => {
+            if (a < b) return -1
+            if (a > b) return 1
+            return 0
         })
     }
 
     getAllFromShelf = (shelf) => {
-        if(shelf) {
+        if (shelf) {
             return this.state.books.filter(book => book.shelf === shelf).sort(sortBy('shelf', 'title'))
         }
     }
@@ -72,10 +72,10 @@ class BooksApp extends React.Component {
         }
     }
 
-    mergeBooks = (arr,Arr) => {
-        return arr.map((item)=>{
-            Arr.forEach((Item)=>{
-                if(Item.id === item.id){
+    mergeBooks = (arr, Arr) => {
+        return arr.map((item) => {
+            Arr.forEach((Item) => {
+                if (Item.id === item.id) {
                     item.shelf = Item.shelf
                     return
                 }

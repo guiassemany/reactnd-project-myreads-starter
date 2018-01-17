@@ -4,7 +4,7 @@ import Book from './Book'
 
 class BookGrid extends Component {
     render() {
-        const {books, shelves, onUpdateBook} = this.props;
+        const {books, shelves, onUpdateBook} = this.props
 
         return (
             <ol className="books-grid">

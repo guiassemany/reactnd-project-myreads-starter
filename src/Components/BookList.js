@@ -15,10 +15,10 @@ class BookList extends Component {
                 <div className="list-books-content">
                     {
                         shelves.map((shelf) => <BookShelf key={shelf}
-                                                            shelves={shelves}
-                                                            shelf={shelf}
-                                                            books={getAllFromShelf(shelf)}
-                                                            onUpdateBook={onUpdateBook}
+                                                          shelves={shelves}
+                                                          shelf={shelf}
+                                                          books={getAllFromShelf(shelf)}
+                                                          onUpdateBook={onUpdateBook}
                         />)
                     }
                 </div>
