@@ -20,7 +20,7 @@ class BookShelfChanger extends Component {
         const {book} = this.props
         return (
             <div className="book-shelf-changer">
-                <select onChange={this.handleShelfChange} value={book.shelf}>
+                <select onChange={this.handleShelfChange} value={book.shelf ? book.shelf : 'none'}>
                     <option value="none" disabled>Move to...</option>
                     {this.props.shelves.map(shelf => (
                         <option key={shelf} value={shelf}>{Helpers.camelCaseToReadable(shelf)}</option>

@@ -3,13 +3,15 @@ import * as BooksAPI from './BooksAPI'
 import {Route, Link} from 'react-router-dom'
 import './App.css'
 import BookShelf from './Components/BookShelf'
-import BookGrid from './Components/BookGrid'
 import BookShelfLoader from './Components/BookShelfLoader'
+import BookSearch from './Components/BookSearch'
+import Book from "./Components/Book"
 
 class BooksApp extends React.Component {
     state = {
         books: [],
-        loading: true
+        loading: true,
+        searchResults: []
     }
 
     componentDidMount() {
@@ -49,6 +51,18 @@ class BooksApp extends React.Component {
             .catch(err => console.error('Error occurred moving book: ', err))
     }
 
+    searchBooks = (query) => {
+        if (query.length > 0) {
+            BooksAPI.search(query).then(response => {
+                if (!response.error) {
+                    this.setState({
+                        searchResults: response
+                    })
+                }
+            })
+        }
+    }
+
     render() {
         return (
             <div className="app">
@@ -76,17 +90,8 @@ class BooksApp extends React.Component {
                     </div>
                 )}/>
                 <Route exact path='/search' render={() => (
-                    <div className="search-books">
-                        <div className="search-books-bar">
-                            <Link className="close-search" to='/'>Close</Link>
-                            <div className="search-books-input-wrapper">
-                                <input type="text" placeholder="Search by title or author"/>
-                            </div>
-                        </div>
-                        <div className="search-books-results">
-                            <BookGrid books={[]}/>
-                        </div>
-                    </div>
+                    <BookSearch onSearch={this.searchBooks} books={this.state.searchResults}
+                                shelves={this.getAvailableShelves()} onUpdateBook={this.updateBook}/>
                 )}/>
             </div>
         )
