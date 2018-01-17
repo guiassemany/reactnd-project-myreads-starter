@@ -3,7 +3,6 @@ import * as BooksAPI from './BooksAPI'
 import {Route, Link} from 'react-router-dom'
 import './App.css'
 import BookShelf from './Components/BookShelf'
-import BookShelfLoader from './Components/BookShelfLoader'
 import BookSearch from './Components/BookSearch'
 import sortBy from 'sort-by'
 
@@ -90,7 +89,9 @@ class BooksApp extends React.Component {
                                 />)
                             )}
                             {this.state.loading && (
-                                <BookShelfLoader/>
+                                <div>
+                                    {/* Loading indicator */}
+                                </div>
                             )}
                         </div>
                         <div className="open-search">
