@@ -5,7 +5,6 @@ import './App.css'
 import BookShelf from './Components/BookShelf'
 import BookShelfLoader from './Components/BookShelfLoader'
 import BookSearch from './Components/BookSearch'
-import Book from "./Components/Book"
 
 class BooksApp extends React.Component {
     state = {

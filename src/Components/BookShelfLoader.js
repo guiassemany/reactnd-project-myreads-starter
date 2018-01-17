@@ -1,5 +1,4 @@
 import React, {Component} from 'react'
-import PropTypes from 'prop-types'
 import ContentLoader from 'react-content-loader'
 
 class BookShelfLoader extends Component {
@@ -23,7 +22,5 @@ class BookShelfLoader extends Component {
         )
     }
 }
-
-BookShelfLoader.propTypes = {}
 
 export default BookShelfLoader
