@@ -32,7 +32,7 @@ const BookSearch = (props) => {
 BookSearch.propTypes = {
     books: PropTypes.array,
     shelves: PropTypes.array.isRequired,
-    updateBooks: PropTypes.func.isRequired,
+    onUpdateBook: PropTypes.func.isRequired,
     onSearch: PropTypes.func.isRequired
 }
 
