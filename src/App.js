@@ -1,4 +1,4 @@
-import React from 'react'
+import React, {Component} from 'react'
 import * as BooksAPI from './BooksAPI'
 import {Route} from 'react-router-dom'
 import './App.css'
@@ -6,7 +6,7 @@ import BookList from './Components/BookList'
 import BookSearch from './Components/BookSearch'
 import sortBy from 'sort-by'
 
-class BooksApp extends React.Component {
+class BooksApp extends Component {
     state = {
         books: [],
         loading: true,
@@ -14,6 +14,9 @@ class BooksApp extends React.Component {
         availableShelves: []
     }
 
+    /*
+    * Busca os livros na api e atualiza a lista de prateleiras disponíveis
+    */
     componentDidMount() {
         BooksAPI.getAll().then(response => {
             this.setState({
@@ -26,6 +29,9 @@ class BooksApp extends React.Component {
         })
     }
 
+    /*
+    * Pega todas as diferentes prateleiras disponíveis. Caso seja criada uma nova, o app já poderia renderizar também.
+    */
     getAvailableShelves() {
         return [...new Set(this.state.books.map(book => book.shelf))].sort((a, b) => {
             if (a < b) return -1
@@ -34,12 +40,19 @@ class BooksApp extends React.Component {
         })
     }
 
+    /*
+    * Pega todos os livros de uma prateleira
+    */
     getAllFromShelf = (shelf) => {
         if (shelf) {
             return this.state.books.filter(book => book.shelf === shelf).sort(sortBy('shelf', 'title'))
         }
     }
 
+    /*
+    * Atualiza o livro na API e depois busca pelo livro e atualiza a prateleira dele no app.
+    * Se não encontrar o livro no array, inclui pois é um livro novo.
+    */
     updateBook = (book, shelf) => {
         BooksAPI.update(book, shelf).then(
             this.setState(prevState => {
@@ -60,6 +73,9 @@ class BooksApp extends React.Component {
             .catch(err => console.error('Error occurred moving book: ', err))
     }
 
+    /*
+    * Procura os livros na api
+    */
     searchBooks = (query) => {
         if (query.length > 0) {
             BooksAPI.search(query).then(response => {
@@ -72,6 +88,10 @@ class BooksApp extends React.Component {
         }
     }
 
+    /*
+    * Faz um merge nos livros para quando exibi-los na pagina de busca, exibir com as prateleiras corretas
+    * se já estiverem alocados em alguma
+    */
     mergeBooks = (arr, Arr) => {
         return arr.map((item) => {
             Arr.forEach((Item) => {
