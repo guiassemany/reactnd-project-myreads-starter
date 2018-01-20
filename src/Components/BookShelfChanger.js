@@ -22,7 +22,9 @@ const BookShelfChanger = (props) => {
 }
 
 BookShelfChanger.propTypes = {
-    shelves: PropTypes.array.isRequired
+    book: PropTypes.object.isRequired,
+    shelves: PropTypes.array.isRequired,
+    onUpdateBook: PropTypes.func.isRequired
 }
 
 export default BookShelfChanger
