@@ -5,6 +5,7 @@ import './App.css'
 import BookList from './Components/BookList'
 import BookSearch from './Components/BookSearch'
 import sortBy from 'sort-by'
+import BookDetails from "./Components/BookDetails"
 
 class BooksApp extends Component {
     state = {
@@ -104,6 +105,15 @@ class BooksApp extends Component {
         })
     }
 
+    /*
+    * Procura livro por ID
+    */
+    getBookById = (id) => {
+        return BooksAPI.get(id).then((book) => {
+            return book
+        })
+    }
+
     render() {
         return (
             <div className="app">
@@ -115,6 +125,9 @@ class BooksApp extends Component {
                 <Route exact path='/search' render={() => (
                     <BookSearch onSearch={this.searchBooks} books={this.state.searchResults}
                                 shelves={this.getAvailableShelves()} onUpdateBook={this.updateBook}/>
+                )}/>
+                <Route path='/details/:book_id' render={(route) => (
+                    <BookDetails loadBookInfo={this.getBookById} bookId={route.match.params.book_id}/>
                 )}/>
             </div>
         )

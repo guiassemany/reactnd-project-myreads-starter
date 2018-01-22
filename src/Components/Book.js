@@ -1,6 +1,7 @@
 import React from 'react'
 import BookShelfChanger from './BookShelfChanger'
 import PropTypes from 'prop-types'
+import {Link} from 'react-router-dom'
 
 const Book = (props) => {
     const {book, shelves, onUpdateBook} = props
@@ -8,11 +9,13 @@ const Book = (props) => {
     return (
         <div className="book">
             <div className="book-top">
-                <div className="book-cover" style={{
-                    width: 128,
-                    height: 193,
-                    backgroundImage: `url("${book.imageLinks.thumbnail}")`
-                }}></div>
+                <Link to={{ pathname: `/details/${book.id}`, query: { book: book } }}>
+                    <div className="book-cover" style={{
+                        width: 128,
+                        height: 193,
+                        backgroundImage: `url("${book.imageLinks.thumbnail}")`
+                    }}></div>
+                </Link>
                 <BookShelfChanger book={book} shelves={shelves} onUpdateBook={onUpdateBook}/>
             </div>
             <div className="book-title">{book.title}</div>
