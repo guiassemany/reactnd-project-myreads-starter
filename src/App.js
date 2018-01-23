@@ -79,7 +79,7 @@ class BooksApp extends Component {
     */
     searchBooks = (query) => {
         if (query.length > 0) {
-            BooksAPI.search(query).then(response => {
+            return BooksAPI.search(query).then(response => {
                 if (!response.error) {
                     this.setState((prevState) => {
                         return {searchResults: this.mergeBooks(response, prevState.books)}
