@@ -1,22 +1,28 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import * as Helpers from '../utils/Helpers'
+import {camelCaseToReadable} from "../utils/Helpers"
+import {Button, Dropdown, Menu} from "semantic-ui-react"
+import {Link} from "react-router-dom"
 
 const BookShelfChanger = (props) => {
     const {book, shelves, onUpdateBook} = props
 
-    const handleShelfChange = (e) => {
-        onUpdateBook(book, e.target.value)
+    const handleShelfChange = (e,d) => {
+        onUpdateBook(book, d.value)
     }
 
+    const options = shelves.map((shelf) => {
+        return {key: shelf, text: camelCaseToReadable(shelf), value:shelf }
+    });
+
     return (
-        <div className="book-shelf-changer">
-            <select onChange={handleShelfChange} value={book.shelf ? book.shelf : 'none'}>
-                <option value="none" disabled>Move to...</option>
-                {shelves.map(shelf => (
-                    <option key={shelf} value={shelf}>{Helpers.camelCaseToReadable(shelf)}</option>
-                ))}
-            </select>
+        <div className='ui two buttons'>
+            <Link to={{ pathname: `/details/${book.id}`, query: { book: book } }}>
+                <Button basic color='purple'>Details</Button>
+            </Link>
+            <Button>
+                <Dropdown text='Shelf' color='green' options={options} onChange={handleShelfChange}/>
+            </Button>
         </div>
     )
 }

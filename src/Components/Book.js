@@ -2,25 +2,23 @@ import React from 'react'
 import BookShelfChanger from './BookShelfChanger'
 import PropTypes from 'prop-types'
 import {Link} from 'react-router-dom'
+import {Button, Card, Divider, Icon, Image} from "semantic-ui-react"
 
 const Book = (props) => {
     const {book, shelves, onUpdateBook} = props
 
     return (
-        <div className="book">
-            <div className="book-top">
-                <Link to={{ pathname: `/details/${book.id}`, query: { book: book } }}>
-                    <div className="book-cover" style={{
-                        width: 128,
-                        height: 193,
-                        backgroundImage: `url("${book.imageLinks.thumbnail}")`
-                    }}></div>
-                </Link>
-                <BookShelfChanger book={book} shelves={shelves} onUpdateBook={onUpdateBook}/>
-            </div>
-            <div className="book-title">{book.title}</div>
-            <div className="book-authors">{book.authors}</div>
-        </div>
+        <Card fluid color='purple' raised className='book-card'>
+            <Image centered size='tiny' src={book.imageLinks.thumbnail}/>
+            <Card.Content>
+                <Card.Header>
+                    {book.title}
+                </Card.Header>
+            </Card.Content>
+            <Card.Content extra>
+                <BookShelfChanger onUpdateBook={onUpdateBook} shelves={shelves} book={book}/>
+            </Card.Content>
+        </Card>
     )
 }
 
