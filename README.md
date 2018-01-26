@@ -1,6 +1,6 @@
 # Projeto MyReads
 
-#Instalando:
+# Instalando:
 * Execute `yarn install` ou `npm install` na pasta raiz do projeto.
 * Ligue o servidor de desenvolvimento com o comando `yarn start` ou `npm start`
 

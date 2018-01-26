@@ -5,7 +5,7 @@ import {Link} from 'react-router-dom'
 
 const Book = (props) => {
     const {book, shelves, onUpdateBook} = props
-
+    const bookThumbnail = book.imageLinks ? book.imageLinks.thumbnail : '';
     return (
         <div className="book">
             <div className="book-top">
@@ -13,7 +13,7 @@ const Book = (props) => {
                     <div className="book-cover" style={{
                         width: 128,
                         height: 193,
-                        backgroundImage: `url("${book.imageLinks.thumbnail}")`
+                        backgroundImage: `url("${bookThumbnail}")`
                     }}></div>
                 </Link>
                 <BookShelfChanger book={book} shelves={shelves} onUpdateBook={onUpdateBook}/>

@@ -11,10 +11,12 @@ class BookSearch extends Component {
     }
 
     handleInputChange(value) {
-        this.setState({loading: true})
-        return this.props.onSearch(value).then((books) => {
-            this.setState({loading: false})
-        })
+        if (value.length > 0) {
+            this.setState({loading: true})
+            return this.props.onSearch(value).then((books) => {
+                this.setState({loading: false})
+            })
+        }
     }
 
     render() {

@@ -22,9 +22,7 @@ class BooksApp extends Component {
         BooksAPI.getAll().then(response => {
             this.setState({
                 books: response,
-                loading: false
-            })
-            this.setState({
+                loading: false,
                 availableShelves: this.getAvailableShelves()
             })
         })
@@ -34,7 +32,7 @@ class BooksApp extends Component {
     * Pega todas as diferentes prateleiras disponíveis. Caso seja criada uma nova, o app já poderia renderizar também.
     */
     getAvailableShelves() {
-        return [...new Set(this.state.books.map(book => book.shelf))].sort((a, b) => {
+        return [...new Set(this.state.books.filter(book => book.shelf !== 'none').map(book => book.shelf))].sort((a, b) => {
             if (a < b) return -1
             if (a > b) return 1
             return 0
@@ -78,15 +76,13 @@ class BooksApp extends Component {
     * Procura os livros na api
     */
     searchBooks = (query) => {
-        if (query.length > 0) {
-            return BooksAPI.search(query).then(response => {
-                if (!response.error) {
-                    this.setState((prevState) => {
-                        return {searchResults: this.mergeBooks(response, prevState.books)}
-                    })
-                }
-            })
-        }
+        return BooksAPI.search(query).then(response => {
+            if (!response.error) {
+                this.setState((prevState) => {
+                    return {searchResults: this.mergeBooks(response, prevState.books)}
+                })
+            }
+        })
     }
 
     /*

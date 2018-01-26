@@ -12,7 +12,8 @@ const BookShelfChanger = (props) => {
     return (
         <div className="book-shelf-changer">
             <select onChange={handleShelfChange} value={book.shelf ? book.shelf : 'none'}>
-                <option value="none" disabled>Move to...</option>
+                <option value="" disabled>Move To...</option>
+                <option value="none">None</option>
                 {shelves.map(shelf => (
                     <option key={shelf} value={shelf}>{Helpers.camelCaseToReadable(shelf)}</option>
                 ))}
